@@ -1,0 +1,65 @@
+seeds: [42, 43, 44]            # multiple seeds for statistical stability
+output_dir: outputs/expC
+epochs: 20
+data:
+  dataset: emnist
+  batch_size: 256
+  num_workers: 4
+  val_ratio: 0.1
+
+model:
+  embed_dim: 32
+  num_heads: 4
+  num_classes: 47
+
+opt:
+  lr: 3.0e-4
+  weight_decay: 1.0e-4
+  
+  scheduler: cosine
+
+augment:
+  strength: medium          # light | medium | strong
+  presets:
+    light:  [rotate, translate]           # 2 light augs
+    medium: [add_noise, elastic, affine]  # 3 moderate 
+    strong: [randaugment, cutmix, mixup]  # 3 aggressive augs
+  params:
+    rotate:
+      degrees: 5
+      prob: 0.5
+
+    translate:
+      max_dx: 0.05
+      max_dy: 0.05
+      prob: 0.5
+
+    affine:
+      degrees: 5
+      translate: [0.05, 0.05]
+      scale:     [0.9, 1.1]
+      shear:     2
+      prob:      0.5
+
+    add_noise:
+      gauss_scale: 0.01
+      salt_prob:   0.05
+
+    elastic:
+      alpha: 1.0
+      sigma: 50.0
+      prob:  0.5
+
+    randaugment:
+      num_ops:   2
+      magnitude: 9
+
+    cutmix:
+      prob: 0.5
+      beta: 1.0
+
+    mixup:
+      prob:  0.5
+      alpha: 0.4
+  model:
+    num_classes: 47

@@ -1,0 +1,31 @@
+# D-stage sweep configuration
+dataset: emnist
+
+sweep:
+  conv2_dropout: [0.0, 0.1, 0.2,0.4]
+  conv2corr_lambda: [0.0, 0.01, 0.1,0.4]
+
+model:
+  embed_dim: 32
+  num_heads: 4
+  num_classes: 47
+
+opt:
+  lr: 3.0e-4
+  weight_decay: 1e-4
+  epochs: 20
+  batch_size: 128
+  scheduler: cosine
+
+# augment:
+#   strength: light
+#   presets:
+#     light: [rotate, translate]
+#   params:
+#     rotate:
+#       degrees: 5
+#       prob: 0.5
+#     translate:
+#       max_dx: 0.05
+#       max_dy: 0.05
+#       prob: 0.5

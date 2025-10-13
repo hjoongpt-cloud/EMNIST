@@ -1,0 +1,44 @@
+# configs/e.yaml
+# Stage E: Mixture-of-Experts on EMNIST
+dataset: emnist
+seeds: [42, 43, 44]
+# C+D settings
+
+analyze:
+  sample_ratio: 0.1      # 배치 중 10%만 통계에 사용
+  every_n_epochs: 1      # 1이면 매 epoch, 5면 5에폭마다만
+
+model:
+  embed_dim: 32
+  num_heads: 4
+  num_classes: 47
+  conv2_dropout: 0.1
+  conv2corr_lambda: 0.1
+  # Mixture-of-Experts
+  num_experts: 3
+  expert_hidden: 128
+  top_k: 3
+
+  gating:
+    type: vanilla        # vanilla | load_balance | entropy
+    # lambda_load: 0.003
+    # lambda_ent: 0.0003
+    lambda_load: 0.0
+    lambda_ent: 0.0
+  ohem:
+    use_ohem: True
+    keep_ratio: 0.6
+
+opt:
+  lr: 1e-3
+  epochs: 20
+  batch_size: 128
+
+augment:
+  strength: custom
+  presets:
+    custom: [randaugment]
+  params:
+    randaugment:
+      num_ops: 20
+      magnitude: 9

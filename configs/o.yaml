@@ -1,0 +1,49 @@
+seeds: [42,43,44]
+model:
+  use_slots: true
+  conv1_stride: 2          # ← 핵심 변경
+  proj_in_channels: 150
+  proj_out_dim: 32
+  num_heads: 4
+  slot_M: 36               # 넉넉히 시작
+  slot_aggregate: concat   # 또는 concat
+  pretrained_filter_path: "/home/tonyhuh/again_0716/filters_emnist_pct5_k150_9_wosobel.npy"
+  global_topk_ratio: 0.08
+train:
+  epochs: 10
+  batch_size: 256
+  num_workers: 2
+  subset: null
+slot_losses:
+  lambda_div: 0.15
+  lambda_cov: 0.05
+  target_entropy: 1.8
+opt:
+  lr: 1e-3
+  epochs: 30
+  batch_size: 128
+pruning:
+  enable_group_lasso: true
+  lambda_gl: 0.002
+  warmup_epochs: 3
+  final_tune_epochs: 5        # ← 마지막 3에폭 파인튜닝
+  apply_during_train: false   # ← 학습 중 프루닝 비활성화
+  post_keep_ratio: 0.83       # ← 최종 남길 슬롯 비율(예: 12중 ~8~9개)
+  post_score: norm # norm | norm_plus_usage (둘 중 택)
+
+normalize:
+  mean: [0.1307]
+  std: [0.3081]
+dump:
+  enabled: true
+  out_dir: outputs/M/dumps
+
+proto:
+  topK: 5
+  per_class_k: 3
+  json_out: outputs/M/proto/prototypes.json
+
+fuse:
+  alpha: 1.0
+  beta: 3.0
+  apply_mode: conservative  # conservative|always

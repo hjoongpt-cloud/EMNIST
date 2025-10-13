@@ -1,0 +1,30 @@
+seeds: [42,43,44]
+opt:
+  lr: 1e-3
+  epochs: 20
+  batch_size: 128
+normalize:
+  mean: [0.1307]
+  std: [0.3081]
+model:
+  proj_in_channels: 55
+  conv1_kernel_size: 9
+  pretrained_filter_path: "/home/tonyhuh/again_0716/filters_emnist_pct5_k55_9_pruned_corr80.npy"
+  freeze_conv1: False
+  proj_out_dim: 32
+  proj_dropout: 0.0
+  num_heads: 4
+  num_experts: 3
+  expert_hidden: 128
+  top_k: 3
+  gating:
+    type: vanilla
+    lambda_load: 0.003
+    lambda_ent: 0.0003
+  ohem:
+    use_ohem: true
+    keep_ratio: 0.6
+  analyze:
+    sample_ratio: 1.0
+    every_n_epochs: 1
+  num_classes: 47

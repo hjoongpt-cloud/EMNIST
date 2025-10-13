@@ -1,0 +1,37 @@
+seeds: [42]
+
+pooling: attention
+opt:
+  lr: 1e-3
+  epochs: 20
+  batch_size: 128
+
+normalize:
+  mean: [0.1307]
+  std: [0.3081]
+
+model:
+  pool_topk: 0.7
+  proj_in_channels: 150
+  conv1_kernel_size: 9
+  pretrained_filter_path: "/home/tonyhuh/again_0716/filters_emnist_pct5_k150_9_wosobel.npy"
+  freeze_conv1: False
+  proj_out_dim: 32
+  num_heads: 4
+  global_topk_ratio: 0.08
+
+  # === MoE (단일 expert) ===
+  num_experts: 1
+  expert_hidden: 128
+  top_k: 1
+
+  gating:
+    type: vanilla
+    lambda_load: 0.003
+    lambda_ent: 0.0003
+
+  ohem:
+    use_ohem: true
+    keep_ratio: 0.6
+
+  num_classes: 47
