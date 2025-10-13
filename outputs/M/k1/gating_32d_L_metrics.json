@@ -1,0 +1,8 @@
+{
+  "train_sup_acc": 0.9970370531082153,
+  "train_mapped": 21600,
+  "train_total": 112800,
+  "test_sup_acc": 0.9930555820465088,
+  "test_mapped": 3600,
+  "test_total": 18800
+}

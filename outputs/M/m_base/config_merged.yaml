@@ -1,0 +1,51 @@
+dump:
+  enabled: true
+  out_dir: outputs/M/dumps
+fuse:
+  alpha: 1.0
+  apply_mode: conservative
+  beta: 3.0
+model:
+  conv1_stride: 2
+  global_topk_ratio: 0.08
+  num_heads: 4
+  pretrained_filter_path: /home/tonyhuh/again_0716/filters_emnist_pct5_k150_9_wosobel.npy
+  proj_in_channels: 150
+  proj_out_dim: 32
+  slot_M: 12
+  slot_aggregate: concat
+  use_slots: true
+normalize:
+  mean:
+  - 0.1307
+  std:
+  - 0.3081
+opt:
+  batch_size: 128
+  epochs: 20
+  lr: 1e-3
+proto:
+  json_out: outputs/M/proto/prototypes.json
+  per_class_k: 3
+  topK: 5
+pruning:
+  apply_during_train: false
+  enable_group_lasso: true
+  final_tune_epochs: 5
+  lambda_gl: 0.002
+  post_keep_ratio: 0.83
+  post_score: norm
+  warmup_epochs: 3
+seeds:
+- 42
+- 43
+- 44
+slot_losses:
+  lambda_cov: 0.05
+  lambda_div: 0.15
+  target_entropy: 1.8
+train:
+  batch_size: 256
+  epochs: 10
+  num_workers: 2
+  subset: null
